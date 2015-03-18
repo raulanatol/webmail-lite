@@ -25931,6 +25931,15 @@ CMessagePaneViewModel.prototype.addToContacts = function (sEmail, sName)
 	}
 };
 
+CMessagePaneViewModel.prototype.addToBlacklist = function(sEmail) {
+    if (confirm('¿Seguro que deseas bloquear los emails hacia '+ sEmail +'?')) {
+        if (!this.processed()) {
+            this.processed(true);
+            App.ContactsCache.addToBlacklist(sEmail, this.onAddToBlacklistResponse, this);
+        }
+    }
+}
+
 /**
  * @param {Object} oResponse
  * @param {Object} oRequest
@@ -25944,6 +25953,18 @@ CMessagePaneViewModel.prototype.onAddToContactsResponse = function (oResponse, o
 		App.ContactsCache.getContactByEmail(oRequest.HomeEmail, this.onContactResponse, this);
 	}
 	this.processed(false);
+};
+
+CMessagePaneViewModel.prototype.onAddToBlacklistResponse = function (oResponse, oRequest)
+{
+    if (oResponse.Result)
+    {
+        App.Api.showReport(Utils.i18n('CONTACTS/USER_TO_BLACK_LIST_ADDED'));
+        this.processed(false);
+    } else {
+        App.Api.showError('No se ha podido añadir a la lista de bloqueados.');
+        this.processed(false);
+    }
 };
 
 CMessagePaneViewModel.prototype.getReplyHtmlText = function ()
@@ -40908,6 +40929,16 @@ CContactsCache.prototype.addToContacts = function (sName, sEmail, fContactCreate
 	App.ContactsCache.recivedAnim(true);
 };
 
+CContactsCache.prototype.addToBlacklist = function (sEmail, fContactBlacklistResponse, onContactBlacklistContext) {
+    var oParameters = {
+        'Action': 'AddToBlacklist',
+        'Email' : sEmail
+    };
+
+    App.Ajax.send(oParameters, fContactBlacklistResponse, onContactBlacklistContext);
+
+    App.ContactsCache.recivedAnim(true);
+}
 
 /**
  * @constructor

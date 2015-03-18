@@ -31,11 +31,11 @@
 		<div class="notice" data-bind="visible: visiblePicturesControl">
 			<span class="item">
 				<span data-i18n="MESSAGE/INFO_MESSAGE_BLOCKED" data-bind="i18n: 'text'"></span>
-				<span class="link" data-i18n="MESSAGE/ACTION_SHOW_PICTURES" 
+				<span class="link" data-i18n="MESSAGE/ACTION_SHOW_PICTURES"
 				   data-bind="i18n: 'text', click: showPictures, visible: visibleShowPicturesLink"></span>
 			</span>
 			<span class="item">
-				<span class="link" data-i18n="MESSAGE/ACTION_ALWAYS_SHOW_PICTURE_THIS_SENDER" 
+				<span class="link" data-i18n="MESSAGE/ACTION_ALWAYS_SHOW_PICTURE_THIS_SENDER"
 				   data-bind="i18n: 'text', click: alwaysShowPictures"></span>
 			</span>
 		</div>
@@ -51,12 +51,12 @@
 			<input type="password" data-bind="value: decryptPassword, onEnter: onDecryptMessageClick" />
 			<span class="link" data-i18n="OPENPGP/ACTION_DECRYPT" data-bind="i18n: 'text', click: onDecryptMessageClick"></span>
 		</div>
-		
+
 		<div class="notice" data-bind="visible: visibleVerifyControl">
 			<span data-i18n="OPENPGP/INFO_SIGNED_MESSAGE" data-bind="i18n: 'text'"></span>
 			<span class="link" data-i18n="OPENPGP/ACTION_VERIFY" data-bind="i18n: 'text', click: onVerifyMessageClick"></span>
 		</div>
-		
+
 		<div class="notice" data-bind="visible: sensitivityText() !== ''">
 			<span data-bind="text: sensitivityText"></span>
 		</div>
@@ -66,7 +66,10 @@
 				<!-- ko if: !mobileApp -->
 				<div class="toolbar">
 					<span class="content">
-
+                        <span class="item wait_client" id="to_blacklist_btn" data-bind="customTooltip:'MESSAGE/ACTION_ADD_TO_BLACKLIST', click: function() { addToBlacklist(oFromAddr().sEmail); }">
+							<span class="icon" style="color:red !important"></span>
+							<span class="text" data-bind="i18n: 'text'" data-i18n="MAILBOX/TOOL_DELETE"></span>
+						</span>
 						<span class="item delete" data-bind="command: deleteCommand, visible: singleMode, customTooltip: 'MAILBOX/TOOL_DELETE'">
 							<span class="icon"></span>
 							<span class="text" data-bind="i18n: 'text'" data-i18n="MAILBOX/TOOL_DELETE"></span>
@@ -96,7 +99,7 @@
 							<span class="text" data-bind="i18n: 'text'" data-i18n="MAILBOX/TOOL_FORWARD"></span>
 						</span>
 						
-						<a class="item new_window" href="javascript: void(0);" 
+						<a class="item new_window" href="javascript: void(0);"
 							data-bind="click: openInNewWindow, visible: !singleMode()">
 							<span class="icon" data-bind="customTooltip: 'MESSAGE/ACTION_OPEN_IN_NEW_WINDOW'"></span>
 							<span class="text" data-bind="i18n: 'text'" data-i18n="MESSAGE/ACTION_OPEN_IN_NEW_WINDOW"></span>
@@ -144,10 +147,10 @@
 					</span>
 				</div>
 				<!-- /ko -->
-				
+
 				<span class="link details_show" data-bind="customTooltip: 'MESSAGE/ACTION_SHOW_DETAILS', click: showDetails, visible: !detailsVisible()"></span>
 				<span class="link details_hide" data-bind="customTooltip: 'MESSAGE/ACTION_HIDE_DETAILS', click: hideDetails, visible: detailsVisible()"></span>
-				
+
 				<div class="message_info" data-bind="visible: !detailsVisible()">
 					<div class="message_info_line">
 						<span class="from control" data-bind="text: currentAccountEmail() === fromEmail() ? meSender : from,
@@ -169,10 +172,10 @@
 						</span>
 					</div>
 				</div>
-				
+
 				<div class="message_info message_detail_info" data-bind="visible: detailsVisible()">
 					<div class="message_info_line">
-						<span class="title" data-i18n="MESSAGE/HEADER_FROM" data-bind="i18n: 'text'"></span>: 
+						<span class="title" data-i18n="MESSAGE/HEADER_FROM" data-bind="i18n: 'text'"></span>:
 						<span class="from control" data-bind="text: fullFrom, 
 							event: {'mouseover': fromMouseoverEvent, 'mouseout': fromMouseoutEvent},
 							  css: {'link founded': oFromAddr() && oFromAddr().founded()}"></span>
@@ -180,9 +183,9 @@
 									click: function () {addToContacts(oFromAddr().sEmail, oFromAddr().sName);},
 									visible: isCurrentNotDraftOrSent() && oFromAddr() && oFromAddr().loaded() && !oFromAddr().founded()"></span>
 					</div>
-				
+
 					<div class="message_info_line" data-bind="visible: aToAddr().length > 0">
-						<span class="title" data-i18n="MESSAGE/HEADER_TO" data-bind="i18n: 'text'"></span>: 
+						<span class="title" data-i18n="MESSAGE/HEADER_TO" data-bind="i18n: 'text'"></span>:
 						<!-- ko foreach: aToAddr -->
 						<span data-bind="text: sFull, event: {'mouseover': mouseoverEvent, 'mouseout': mouseoutEvent},
 							  css: {'link founded': founded}">
@@ -193,7 +196,7 @@
 						<!-- /ko -->
 					</div>
 					<div class="message_info_line" data-bind="visible: aCcAddr().length > 0">
-						<span class="title" data-i18n="MESSAGE/HEADER_CC" data-bind="i18n: 'text'"></span>: 
+						<span class="title" data-i18n="MESSAGE/HEADER_CC" data-bind="i18n: 'text'"></span>:
 						<!-- ko foreach: aCcAddr -->
 						<span data-bind="text: sFull, event: {'mouseover': mouseoverEvent, 'mouseout': mouseoutEvent},
 							  css: {'link founded': founded}">
@@ -204,7 +207,7 @@
 						<!-- /ko -->
 					</div>
 					<div class="message_info_line" data-bind="visible: aBccAddr().length > 0">
-						<span class="title" data-i18n="MESSAGE/HEADER_BCC" data-bind="i18n: 'text'"></span>: 
+						<span class="title" data-i18n="MESSAGE/HEADER_BCC" data-bind="i18n: 'text'"></span>:
 						<!-- ko foreach: aBccAddr -->
 						<span data-bind="text: sFull, event: {'mouseover': mouseoverEvent, 'mouseout': mouseoutEvent},
 							  css: {'link founded': founded}">
@@ -215,7 +218,7 @@
 						<!-- /ko -->
 					</div>
 					<div class="message_info_line">
-						<span class="title" data-i18n="MESSAGE/HEADER_DATE" data-bind="i18n: 'text'"></span>: 
+						<span class="title" data-i18n="MESSAGE/HEADER_DATE" data-bind="i18n: 'text'"></span>:
 						<span data-bind="text: fullDate"></span>
 					</div>
 					<!--<div class="message_info_line" data-bind="visible: currentMessage() && currentMessage().completelyFilled()">
@@ -242,7 +245,7 @@
 		<!-- /ko -->
 	</div>
 	<div class="panels" data-bind="css: {'has_attachments': hasNotInlineAttachments, 'view_attachments': visibleAttachments}">
-	
+
 		<div class="panel right_panel" data-bind="visible: hasNotInlineAttachments, customScrollbar: {x: false, 'reset': currentMessage()}">
 			<div class="scroll-inner">
 				<div class="attachments large">
@@ -251,7 +254,7 @@
 							<span class="icon"></span>
 							<span class="text" data-i18n="MESSAGE/ATTACHMENT_DOWNLOAD_ALL" data-bind="i18n: 'text'"></span>
 						</span>
-						
+
 						<div class="content">
 							<span class="link all" data-bind="click: downloadAllAttachments, visible: visibleDownloadAllAttachments">
 								<span class="icon"></span>
@@ -285,12 +288,12 @@
 					<!-- /ko -->
 
 					<div class="message_body_info" data-bind="visible: visibleNoMessageSelectedText">
-						<div data-i18n="MESSAGE/INFO_NO_MESSAGE_SELECTED" 
+						<div data-i18n="MESSAGE/INFO_NO_MESSAGE_SELECTED"
 							 data-bind="i18n: 'text'"></div>
-						<div class="message_body_secondary_info" data-i18n="MESSAGE/INFO_SINGLE_DOUBLE_CLICK" 
+						<div class="message_body_secondary_info" data-i18n="MESSAGE/INFO_SINGLE_DOUBLE_CLICK"
 							 data-bind="i18n: 'text'"></div>
 					</div>
-					<div class="message_body_info" data-i18n="MESSAGE/INFO_LOADING" 
+					<div class="message_body_info" data-i18n="MESSAGE/INFO_LOADING"
 						 data-bind="visible: isLoading, i18n: 'text'"></div>
 					<div class="message_body html" data-bind="initDom: domTextBody, attr: {'dir': rtlMessage() ? 'rtl' : 'ltr'}"></div>
 					<!--<div class="bodyparts_separator"></div>-->
@@ -298,9 +301,9 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- ko if: !mobileApp -->
-	<div class="quick_reply fields" data-bind="initDom: domQuickReply, 
+	<div class="quick_reply fields" data-bind="initDom: domQuickReply,
 		quickReplyAnim: {
 			'sendAction': replySendingStarted(), 
 			'saveAction': replySavingStarted(), 
@@ -312,9 +315,9 @@
 		</div>
 		<div class="row" data-bind="css: {'focused': replyTextFocus(),
 			 'filled': replyText().length > 0}">
-			<label for="reply_text" class="title placeholder" 
+			<label for="reply_text" class="title placeholder"
 				   data-i18n="COMPOSE/QUICK_REPLY_PLACEHOLDER" data-bind="i18n: 'text'"></label>
-			<textarea id="reply_text" class="input" data-bind="value: replyText, 
+			<textarea id="reply_text" class="input" data-bind="value: replyText,
 				hasfocus: replyTextFocus, onCtrlEnter: executeSendQuickReplyCommand, 
 				valueUpdate: 'afterkeydown', style: {'fontFamily': defaultFontName}"></textarea>
 		</div>
@@ -322,8 +325,8 @@
 			<span class="button send special" data-bind="i18n: 'text', command: sendQuickReplyCommand" data-i18n="COMPOSE/TOOL_SEND"></span>
 			<span class="button save" data-bind="text: saveButtonText, command: saveQuickReplyCommand"></span>
 			<span class="text hint" data-i18n="COMPOSE/QUICK_REPLY_HOTKEY" data-bind="i18n: 'text'"></span>
-			<a class="link full_form" href="javascript: void(0);" 
-			   data-bind="i18n: 'text', command: replyAllCommand" 
+			<a class="link full_form" href="javascript: void(0);"
+			   data-bind="i18n: 'text', command: replyAllCommand"
 			   data-i18n="COMPOSE/QUICK_REPLY_OPEN_FULL"></a>
 		</div>
 	</div>

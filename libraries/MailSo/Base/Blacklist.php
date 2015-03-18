@@ -43,4 +43,12 @@ class Blacklist {
         $oToEmails = \MailSo\Mime\EmailCollection::NewInstance($rawEmailList);
         return $oToEmails->GetAsArray();
     }
+
+    /**
+     * @param $emailToBlock
+     * @return bool
+     */
+    public static function addEmailToBlackList($emailToBlock) {
+        return true;
+    }
 }

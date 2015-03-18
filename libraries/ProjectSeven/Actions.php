@@ -4441,6 +4441,16 @@ class Actions extends ActionsBase
 		return $this->FalseResponse($oAccount, __FUNCTION__);
 	}
 
+    public function AjaxAddToBlacklist() {
+        $oAccount = $this->getDefaultAccountFromParam();
+        $emailToBlock = $this->getParamValue('Email');
+        if (Blacklist::addEmailToBlackList($emailToBlock)) {
+            return $this->TrueResponse($oAccount, __FUNCTION__);
+        } else {
+            return $this->FalseResponse($oAccount, __FUNCTION__);
+        }
+    }
+
 	/**
 	 * @return array
 	 */

@@ -13,6 +13,8 @@ return array(
 	'sieve.config.filters-folder-charset' => 'utf-8', // [utf7-imap, utf-8]
 	'sieve.config.domains' => $aSieveDomains,
 
-	'links.importing-contacts' => 'http://www.afterlogic.com/wiki/Importing_contacts_(WebMail_Lite)'
+	'links.importing-contacts' => 'http://www.afterlogic.com/wiki/Importing_contacts_(WebMail_Lite)',
+
+    'plugins.blacklist' => true,
 	
 );
