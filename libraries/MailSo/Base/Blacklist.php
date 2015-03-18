@@ -2,7 +2,6 @@
 
 namespace MailSo\Base;
 
-
 class Blacklist {
 
     /**
@@ -24,15 +23,18 @@ class Blacklist {
     }
 
     /**
+     * Verify if the emails is on blacklist or no.
      * @param \MailSo\Mime\Email $email
-     * @return bool
+     * @return bool returns false if email on blacklist
      */
     private static function isValidEmail($email) {
-        if ($email->GetEmail() == 'backlist@gmail.com') {
+        $emailToFind = strtolower($email->GetEmail());
+        $emailDomain = 'TODO';
+        //FIXME verify domain first
+        if (Blacklist::emailOnBlackListTable($emailToFind)) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     /**
@@ -49,6 +51,29 @@ class Blacklist {
      * @return bool
      */
     public static function addEmailToBlackList($emailToBlock) {
-        return true;
+        $result = false;
+        /** @var \CApiDbManager $oApiDbManager */
+        $oApiDbManager = \CApi::Manager('db');
+        if (!Blacklist::emailOnBlackListTable($emailToBlock)) {
+            $result = $oApiDbManager->ExecuteQuery("INSERT INTO email_blacklist (email) VALUES ('" . strtolower($emailToBlock) . "')");
+        } else {
+            $result = true;
+        }
+        return $result;
+    }
+
+    /**
+     * @param $email
+     * @return bool
+     */
+    private static function emailOnBlackListTable($email) {
+        $response = true;
+        /** @var \CApiDbManager $oApiDbManager */
+        $oApiDbManager = \CApi::Manager('db');
+        $result = $oApiDbManager->GetSimpleQuery("SELECT count(1) as result FROM email_blacklist WHERE email = '" . strtolower($email) . "'");
+        if ($result != null) {
+            $response = (bool)$result->result;
+        }
+        return $response;
     }
 }

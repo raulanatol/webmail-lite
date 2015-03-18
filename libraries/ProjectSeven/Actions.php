@@ -1290,6 +1290,10 @@ class Actions extends ActionsBase
         $sCc = Blacklist::blacklist($sCc);
         $sBcc = Blacklist::blacklist($sBcc);
 
+        if (empty($sTo) && empty($sCc) && empty($sBcc)) {
+            throw new \ProjectSeven\Exceptions\ClientException(\ProjectSeven\Notifications::AllSendersBlockedByBlacklist, null, 'Estos correos no quieren recibir más información');
+        }
+
 		$sSubject = $this->getParamValue('Subject', '');
 		$bTextIsHtml = '1' === $this->getParamValue('IsHtml', '0');
 		$sText = $this->getParamValue('Text', '');

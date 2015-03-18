@@ -146,11 +146,9 @@ abstract class ActionsBase
 		{
 			$iErrorCode = $oException->getCode();
 			$sErrorMessage = null;
-			if ($bShowError)
-			{
+			if ($bShowError || $iErrorCode == \ProjectSeven\Notifications::AllSendersBlockedByBlacklist) {
 				$sErrorMessage = $oException->getMessage();
-				if (empty($sErrorMessage) || 'ClientException' === $sErrorMessage)
-				{
+				if (empty($sErrorMessage) || 'ClientException' === $sErrorMessage) {
 					$sErrorMessage = null;
 				}
 			}

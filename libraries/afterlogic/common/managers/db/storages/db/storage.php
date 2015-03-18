@@ -304,4 +304,32 @@ class CApiDbDbStorage extends CApiDbStorage
 		}
 		return $aResult;
 	}
+
+    public function ExecuteQuery($query) {
+        $bResult = $this->oConnection->Execute($query);
+        $this->throwDbExceptionIfExist();
+        return (bool) $bResult;
+    }
+
+    public function GetSelect($select) {
+        $result = null;
+        if ($this->oConnection->Execute($select)) {
+            $row = $this->oConnection->GetResultAsObjects();
+            if ($row) {
+                $result = $row;
+            }
+        }
+        $this->throwDbExceptionIfExist();
+        return $result;
+    }
+
+
+    public function GetSimpleQuery($select) {
+        $result = null;
+        if ($this->oConnection->Execute($select)) {
+            $result = $this->oConnection->GetNextRecord();
+        }
+        $this->throwDbExceptionIfExist();
+        return $result;
+    }
 }

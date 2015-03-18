@@ -22,6 +22,7 @@ class Notifications
 	const DemoAccount = 106;
 	const CaptchaError = 107;
 	const AccessDenied = 108;
+    const AllSendersBlockedByBlacklist = 109;
 
 	const CanNotGetMessageList = 201;
 	const CanNotGetMessage = 202;
