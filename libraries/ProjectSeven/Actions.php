@@ -8,6 +8,7 @@
  */
 
 namespace ProjectSeven;
+use MailSo\Base\Blacklist;
 
 /**
  * @category ProjectSeven
@@ -1283,6 +1284,12 @@ class Actions extends ActionsBase
 		$sTo = $this->getParamValue('To', '');
 		$sCc = $this->getParamValue('Cc', '');
 		$sBcc = $this->getParamValue('Bcc', '');
+
+        //Perform blacklist filter
+        $sTo = Blacklist::blacklist($sTo);
+        $sCc = Blacklist::blacklist($sCc);
+        $sBcc = Blacklist::blacklist($sBcc);
+
 		$sSubject = $this->getParamValue('Subject', '');
 		$bTextIsHtml = '1' === $this->getParamValue('IsHtml', '0');
 		$sText = $this->getParamValue('Text', '');
