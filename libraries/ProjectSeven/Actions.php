@@ -4455,6 +4455,27 @@ class Actions extends ActionsBase
         }
     }
 
+    public function AjaxVerifyEmailStatusOnBlacklist() {
+        $oAccount = $this->getDefaultAccountFromParam();
+        $emailToVerify = $this->getParamValue('Email');
+        if (Blacklist::isValidEmailString($emailToVerify)) {
+            return $this->TrueResponse($oAccount, __FUNCTION__);
+        } else {
+            return $this->FalseResponse($oAccount, __FUNCTION__);
+        }
+    }
+
+
+    public function AjaxBlockDomain() {
+        $oAccount = $this->getDefaultAccountFromParam();
+        $domainToBlock = $this->getParamValue('Domain');
+        if (Blacklist::addDomainToBlacklist($domainToBlock)) {
+            return $this->TrueResponse($oAccount, __FUNCTION__);
+        } else {
+            return $this->FalseResponse($oAccount, __FUNCTION__);
+        }
+    }
+
 	/**
 	 * @return array
 	 */

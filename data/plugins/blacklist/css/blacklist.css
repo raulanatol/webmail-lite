@@ -1,0 +1,7 @@
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}
+
+#bl_modal {
+    text-align: center;
+}

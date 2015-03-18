@@ -9,30 +9,39 @@
                     <div class="fields clearfix">
                         <div class="row">
                             <span class="label"><span class="text">Bloquear un email</span>: </span>
-                            <input class="value input" type="text" style="width: 150px">
-                            <button>Bloquear</button>
-                            <span class="item"></span>
+                            <input id="emailToBlockInput" class="value input" type="text" style="width: 150px">
+                            <span class="item wait_client" data-bind="customTooltip:'MESSAGE/ACTION_ADD_TO_BLACKLIST', click: function() { addToBlacklistEmail(); }">
+                                <button>Bloquear email</button>
+                            </span>
                         </div>
                         <div class="row">
                             <span class="label"><span class="text">Bloquear todo el dominio</span>: </span>
-                            <input class="value input" type="text" style="width: 150px">
-                            <button>Bloquear</button>
-                            <span class="item"></span>
+                            <input id="domainToBlockInput" class="value input" type="text" style="width: 150px">
+                            <span class="item wait_client" data-bind="customTooltip:'MESSAGE/ACTION_ADD_TO_BLACKLIST', click: function() { blockDomain(); }">
+                                <button>Bloquear dominio</button>
+                            </span>
                         </div>
                     </div>
                 </div>
                 <br/>
+
                 <div class="contact_data_groups edit">
                     <div class="fields clearfix">
                         <div class="row">
                             <span class="label"><span class="text">Comprobar correo</span>: </span>
-                            <input class="value input" type="text" style="width: 150px">
-                            <button>Bloquear</button>
-                            <span class="item"></span>
+                            <input id="emailToVerifyInput" class="value input" type="text" style="width: 150px">
+                            <span class="item wait_client" data-bind="customTooltip:'MESSAGE/ACTION_ADD_TO_BLACKLIST', click: function() { verifyEmailStatusOnBlacklist(); }">
+                                <button>Verificar email</button>
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div id="bl_modal">
+    <p>Espere mientras se realiza la acción</p>
+
+    <p><img id="loader" src="static/img/ajax-loader.gif"/></p>
 </div>

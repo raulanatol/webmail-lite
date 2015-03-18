@@ -13,6 +13,7 @@ class BlacklistPlugin extends AApiPlugin {
 
         $this->AddJsFile('js/blacklist.js');
         $this->AddJsFile('js/include.js');
+        $this->AddCssFile('css/blacklist.css');
 
         $this->AddTemplate('Blacklist', 'templates/blacklist.html');
     }
