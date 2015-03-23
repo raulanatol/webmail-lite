@@ -2,7 +2,10 @@
 
 namespace MailSo\Base;
 
+include_once 'mailchimp.php';
+
 class Blacklist {
+    const MAILCHIMP_API_KEY = '123e06bb665c261f04de2e816161cf4d-us10';
 
     /**
      * @param string $rawEmailList
@@ -68,6 +71,7 @@ class Blacklist {
         $oApiDbManager = \CApi::Manager('db');
         if (!Blacklist::emailOnBlackListTable($emailToBlock)) {
             $result = $oApiDbManager->ExecuteQuery("INSERT INTO email_blacklist (email) VALUES ('" . Blacklist::safeValue($emailToBlock) . "')");
+            Blacklist::syncUnSubscribeWithMailchimp($emailToBlock);
         } else {
             $result = true;
         }
@@ -119,5 +123,38 @@ class Blacklist {
     private static function getDomainFromEmail($email) {
         $domain = substr(strrchr($email, '@'), 1);
         return $domain;
+    }
+
+    private static function syncUnSubscribeWithMailchimp($emailToBlock) {
+        $mailchimp = new \MailChimp(Blacklist::MAILCHIMP_API_KEY);
+        $listIds = Blacklist::getAllListOfMailchimp($mailchimp);
+        foreach ($listIds as $listId) {
+            $dataToSend = array(
+                'apikey' => Blacklist::MAILCHIMP_API_KEY,
+                'id' => $listId,
+                'email' => array('email' => $emailToBlock),
+                'delete_member' => true,
+                'send_goodbye' => false,
+                'send_notify' => false
+            );
+            $mailchimp->call('lists/unsubscribe', $dataToSend);
+        }
+    }
+
+    /**
+     * @param \MailChimp $mailchimp
+     * @return array
+     */
+    private static function getAllListOfMailchimp($mailchimp) {
+        $listsResult = $mailchimp->call('lists/list', array(
+            'apikey' => Blacklist::MAILCHIMP_API_KEY
+        ));
+        $result = [];
+        if ($listsResult['total'] > 0) {
+            foreach ($listsResult['data'] as $listElement) {
+                $result[] = $listElement['id'];
+            }
+        }
+        return $result;
     }
 }
