@@ -36,6 +36,21 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="contact_data_groups edit">
+                    <div class="fields clearfix">
+                        <div class="row">
+                            <form id="fileForUploadForm" enctype="multipart/form-data" action="uploader.php" method="post">
+                                <input type="hidden" name="MAX_FILE_SIZE" value="1000000"/>
+                                Selecciona un documento de emails: <input class="custom-file-input" name="uploaded_file" type="file"/>
+                                <span class="item wait_client" data-bind="customTooltip:'Subir fichero', click: function() { sendFileToUploader(); }">
+                                    <button>Subir fichero</button>
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

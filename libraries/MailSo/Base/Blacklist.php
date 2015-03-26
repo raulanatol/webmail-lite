@@ -149,12 +149,30 @@ class Blacklist {
         $listsResult = $mailchimp->call('lists/list', array(
             'apikey' => Blacklist::MAILCHIMP_API_KEY
         ));
-        $result = [];
+        $result = array();
         if ($listsResult['total'] > 0) {
             foreach ($listsResult['data'] as $listElement) {
                 $result[] = $listElement['id'];
             }
         }
         return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getNewMassiveEmails() {
+        /** @var \CApiDbManager $oApiDbManager */
+        $oApiDbManager = \CApi::Manager('db');
+        $queryResult = $oApiDbManager->GetSelect("SELECT * FROM massive_email_list WHERE ENABLED = 1 LIMIT 50");
+        $resultList = array();
+        $removeIds = array();
+        foreach ($queryResult as $email) {
+            $resultList[] = $email->email;
+            $removeIds[] = $email->id;
+        }
+        $resultData = implode(',', $resultList);
+        $oApiDbManager->ExecuteQuery("UPDATE massive_email_list SET ENABLED=0 WHERE id in (" . implode(',', $removeIds) . ")");
+        return $resultData;
     }
 }

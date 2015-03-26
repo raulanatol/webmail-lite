@@ -1400,7 +1400,9 @@ Utils.getIncorrectEmailsFromAddressString = function (sAddresses)
 			oEmailParts = Utils.getEmailParts(Utils.trim(aEmails[iIndex]));
 			if (!Utils.isCorrectEmail(oEmailParts.email))
 			{
-				aIncorrectEmails.push(oEmailParts.email);
+                if (sFullEmail != 'listado') {
+				    aIncorrectEmails.push(oEmailParts.email);
+                }
 			}
 		}
 	}

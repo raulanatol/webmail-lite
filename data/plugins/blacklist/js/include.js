@@ -59,6 +59,11 @@ Blacklist.prototype.verifyEmailStatusOnBlacklist = function () {
     }
 };
 
+Blacklist.prototype.sendFileToUploader = function () {
+    this.showSpinner();
+    $('#fileForUploadForm').submit();
+};
+
 Blacklist.prototype.onVerifyEmailStatusOnBlacklistResponse = function (oResponse, oRequest) {
     if (oResponse.Result) {
         App.Api.showReport('Email no bloqueado');
