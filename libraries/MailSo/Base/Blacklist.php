@@ -89,6 +89,13 @@ class Blacklist {
         return $result;
     }
 
+    public static function removeEmailFromBlacklist($emailToReopen) {
+        /** @var \CApiDbManager $oApiDbManager */
+        $oApiDbManager = \CApi::Manager('db');
+        $result = $oApiDbManager->ExecuteQuery("DELETE FROM email_blacklist WHERE email = '" . $emailToReopen . "'");
+        return $result;
+    }
+
     /**
      * @param $email
      * @return bool

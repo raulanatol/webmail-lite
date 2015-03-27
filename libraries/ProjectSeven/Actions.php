@@ -3930,6 +3930,17 @@ class Actions extends ActionsBase {
         }
     }
 
+
+    public function AjaxReopenEmail() {
+        $oAccount = $this->getDefaultAccountFromParam();
+        $emailToReopen = $this->getParamValue('Email');
+        if (Blacklist::removeEmailFromBlacklist($emailToReopen)) {
+            return $this->TrueResponse($oAccount, __FUNCTION__);
+        } else {
+            return $this->FalseResponse($oAccount, __FUNCTION__);
+        }
+    }
+
     /**
      * @return array
      */

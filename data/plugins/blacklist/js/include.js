@@ -99,3 +99,30 @@ Blacklist.prototype.onBlockDomainResponse = function (oResponse, oRequest) {
     }
     this.hideSpinner();
 };
+
+Blacklist.prototype.reopenEmailOnBlacklist = function () {
+    var email = $('#emailToReopen').val();
+    var password = prompt('Seguro que quieres desbloquear el email ' + email + '?. Introduce la contraseña para continuar.');
+    if (password == 'consultoriaDesbloquear123') {
+        if (!this.isShowingSpinner) {
+            this.showSpinner();
+            var oParameters = {
+                'Action': 'ReopenEmail',
+                'Email': email
+            };
+            App.Ajax.send(oParameters, this.onReopenEmailBlacklist, this);
+        }
+    } else {
+        alert('¡Contraseña incorrecta!');
+    }
+};
+
+
+Blacklist.prototype.onReopenEmailBlacklist = function (oResponse, oRequest) {
+    if (oResponse.Result) {
+        App.Api.showReport('Email desbloqueado correctamente');
+    } else {
+        App.Api.showError('No se ha podido desbloquear el dominio');
+    }
+    this.hideSpinner();
+};
