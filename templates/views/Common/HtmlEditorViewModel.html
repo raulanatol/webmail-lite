@@ -69,9 +69,19 @@
 
             <span class="separator"></span>
 
+            <a href="javascript:void(0);" class="item acenter" data-bind="click: function () { oCrea.alignLeft(); }">
+                <img src="static/img/left-icon.png" width="16" height="16" alt="Izquierda"/>
+            </a>
+
             <a href="javascript:void(0);" class="item acenter" data-bind="click: function () { oCrea.center(); }">
                 <img src="static/img/center-icon.png" width="16" height="16" alt="Centrar"/>
             </a>
+
+            <a href="javascript:void(0);" class="item acenter" data-bind="click: function () { oCrea.alignRight(); }">
+                <img src="static/img/right-icon.png" width="16" height="16" alt="Derecha"/>
+            </a>
+
+            <span class="separator"></span>
 
             <a href="javascript:void(0);" class="item link" data-bind="click: insertLink,
 			   css: {'expand': visibleInsertLinkPopup}, initDom: insertLinkDropdownDom">
